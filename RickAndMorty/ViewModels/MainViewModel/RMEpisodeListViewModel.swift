@@ -1,22 +1,26 @@
 //
-//  RMCharacterListViewModel.swift
+//  RMEpisodeListViewModel.swift
 //  RickAndMorty
 //
-//  Created by Kulkarni, Pranav on 27/02/24.
+//  Created by Kulkarni, Pranav on 02/03/24.
 //
 
 import Foundation
 
-class RMCharacterListViewModel: ObservableObject {
+class RMEpisodeListViewModel: ObservableObject {
     
     @Published var isLoading = false
-    @Published var characters: [RMCharacterModel] = []
+    @Published var episodes: [RMEpisodeModel] = []
     @Published var apiInfo: Info? = nil
     @Published var isLoadingMore = false
     @Published var count = 1
     
-    func fetchCharacters() {
-        let urlRequest = "https://rickandmortyapi.com/api/character/?page=\(count)"
+    init() {
+        fetchEpisodes()
+    }
+
+    func fetchEpisodes() {
+        let urlRequest = "https://rickandmortyapi.com/api/episode?page=\(count)"
         let session = URLSession(configuration: .default)
         session.dataTask(with: URL(string: urlRequest)!) { data ,_ , error in
             if error != nil {
@@ -25,10 +29,10 @@ class RMCharacterListViewModel: ObservableObject {
             }
             
             do {
-                let jsonData = try JSONDecoder().decode(RMGetAllCharactersResponseModel.self, from: data!)
-                let oldCharacters = self.characters
+                let jsonData = try JSONDecoder().decode(RMGetAllEpisodesResponseModel.self, from: data!)
+                let oldEpisodes = self.episodes
                 DispatchQueue.main.async {
-                    self.characters = oldCharacters + jsonData.results
+                    self.episodes = oldEpisodes + jsonData.results
                     
                     self.isLoading = true
                     
@@ -42,9 +46,5 @@ class RMCharacterListViewModel: ObservableObject {
             }
         }
         .resume()
-    }
-
-    init() {
-        fetchCharacters()
     }
 }

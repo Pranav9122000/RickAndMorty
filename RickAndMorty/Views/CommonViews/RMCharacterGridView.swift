@@ -15,6 +15,9 @@ struct RMCharacterGridView: View {
     var body: some View {
         VStack(spacing: 6) {
             RMCharacterImageView(url: URL(string: character.image)!)
+                .frame(width: 150, height: 150)
+                .clipShape(Circle())
+                .shadow(color: .secondary, radius: 5)
             Text(character.name)
                 .font(.headline).bold().lineLimit(1)
             HStack(spacing: 2) {

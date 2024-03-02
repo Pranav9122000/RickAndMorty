@@ -22,12 +22,11 @@ struct RMCharacterImageView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 150, height: 150)
-                    .clipShape(Circle())
-                    .shadow(color: .secondary, radius: 5)
             } else {
                 Image(systemName: "exclamationmark.triangle")
                     .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
             }
         }
         .onAppear {
