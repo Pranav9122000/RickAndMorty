@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct RMCharacterModel: Codable {
+struct RMCharacterModel: Codable, Identifiable, Equatable {
+    static func == (lhs: RMCharacterModel, rhs: RMCharacterModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     let id: Int
     let name: String
     let status: RMCharacterStatus
@@ -26,6 +30,15 @@ enum RMCharacterStatus: String, Codable {
     case alive = "Alive"
     case dead = "Dead"
     case unknown = "unknown"
+    
+    var text: String {
+        switch self {
+        case .alive, .dead:
+            return rawValue
+        case .unknown:
+            return "Unknown"
+        }
+    }
 }
 
 enum RMCharacterGender: String, Codable {
